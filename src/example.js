@@ -69,4 +69,3 @@ getUser()
   .catch(function (error) {
     console.log(error);
   });
-
