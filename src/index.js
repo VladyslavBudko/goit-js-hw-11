@@ -14,7 +14,7 @@ refs.searchForm.addEventListener('submit', onSearch);
 function onSearch(event) {
   event.preventDefault();
 
-  fetchPhoto.query = event.currentTarget.elements.searchQuery.value;
+  fetchPhoto.query = event.currentTarget.elements.searchQuery.value.trim();
 
   if (fetchPhoto.query === '') {
     return onFetchError();
@@ -43,9 +43,9 @@ function clearArticlesContainer() {
 const onEntry = entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting && fetchPhoto.query !== '') {
-      fetchPhoto.incrementPage();
       fetchPhoto.fetchArticles().then(hits => {
         appendArticlesMarkup(hits.data.hits);
+        fetchPhoto.incrementPage();
       });
     }
   });

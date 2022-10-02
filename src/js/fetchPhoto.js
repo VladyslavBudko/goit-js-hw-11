@@ -5,7 +5,6 @@ export { FetchPhoto, onFetchError };
 
 const refs = getRefs();
 
-
 // https://pixabay.com/api/?key=30279426-ce0edf6a31bb607e668c5bb01&q=yellow+flowers&image_type=photo
 const MAIN_URL = 'https://pixabay.com/api/';
 const API_KEY = '?key=30279426-ce0edf6a31bb607e668c5bb01&';
@@ -22,7 +21,6 @@ class FetchPhoto {
       const searchParams = new URLSearchParams({
         q: this.searchQuery,
         per_page: 40,
-        page: this.page,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
@@ -34,10 +32,14 @@ class FetchPhoto {
       console.log(this.page);
 
       const response = await axios.get(url);
-      return response;
+      if (this.page === 1) {
+        Notiflix.Notify.success(
+          `Hooray! We found ${response.data.totalHits} images.`
+        );
+      }
 
-      // .then(function ({ data.hits }) => hits);
-      // return (response = await axios.get(url).then(({ articles }) => articles));
+      console.log(response);
+      return response;
     } catch (error) {
       console.error('error in async:', error);
       return onFetchError;
@@ -46,9 +48,6 @@ class FetchPhoto {
 
   incrementPage() {
     this.page += 1;
-    // if (this.page = 2) {
-    //   Notiflix.Notify.success('Hooray! We found totalHits images.');
-    // }
   }
 
   resetPage() {
