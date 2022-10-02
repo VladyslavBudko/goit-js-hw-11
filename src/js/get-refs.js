@@ -6,5 +6,7 @@ export default function getRefs() {
     moreBtn: document.querySelector('.load-more'),
     sentinel: document.querySelector('#sentinel'),
     articlesContainer: document.querySelector('.js-articles-container'),
+
+    galleryEl: document.querySelector('.gallery'),
   };
 }
