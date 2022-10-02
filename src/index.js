@@ -42,36 +42,10 @@ function onSearch(event) {
     appendArticlesMarkup(hits.data.hits);
     fetchPhoto.incrementPage();
   });
-
-  // if !!!!!!!!!
 }
 
 function appendArticlesMarkup(hits) {
   refs.galleryEl.insertAdjacentHTML('beforeend', articlesTpl(hits));
-}
-
-refs.galleryEl.addEventListener('click', onClickGalleryItem);
-
-function onClickGalleryItem(event) {
-  if (!event.target.classList.contains('gallery__image')) {
-    return;
-  }
-  event.preventDefault();
-  //   console.log(event.target);
-
-  showModalImgSimpleLightbox();
-}
-
-function showModalImgSimpleLightbox() {
-  let lightbox = new SimpleLightbox('.gallery a', {
-    nav: true,
-    caption: true,
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-  });
-
-  lightbox.refresh();
 }
 
 function clearArticlesContainer() {
@@ -89,7 +63,32 @@ const onEntry = entries => {
   });
 };
 
+// Бесконечній скролл
 const observer = new IntersectionObserver(onEntry, {
   rootMargin: '150px',
 });
 observer.observe(refs.sentinel);
+
+// SimpleLightbox
+refs.galleryEl.addEventListener('click', onClickGalleryItem);
+
+function onClickGalleryItem(event) {
+  if (!event.target.classList.contains('gallery__image')) {
+    return;
+  }
+  event.preventDefault();
+  //   console.log(event.target);
+  showModalImgSimpleLightbox();
+}
+
+function showModalImgSimpleLightbox() {
+  let lightbox = new SimpleLightbox('.gallery a', {
+    nav: true,
+    caption: true,
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+  });
+
+  lightbox.refresh();
+}

@@ -44,7 +44,6 @@ class FetchPhoto {
           `We're sorry, but you've reached the end of search results ${response.data.totalHits} images`
         );
         refs.moreBtn.classList.remove('is-hidden');
-        return;
       }
 
       return response;
