@@ -1,4 +1,5 @@
 // import axios from 'axios';
+import SimpleLightbox from "simplelightbox";
 import Notiflix from 'notiflix';
 import { FetchPhoto, onFetchError, resetInnerHTML } from './js/fetchPhoto';
 import getRefs from './js/get-refs';
@@ -10,6 +11,7 @@ const fetchPhoto = new FetchPhoto();
 refs.submitBtn.classList.add('button');
 refs.moreBtn.classList.add('button', 'is-hidden');
 
+// Пoвернення до початку сторінки
 refs.moreBtn.addEventListener('click', topFunction);
 
 function topFunction() {
