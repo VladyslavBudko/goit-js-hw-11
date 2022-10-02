@@ -4,12 +4,8 @@ export { FetchPhoto, onFetchError, resetInnerHTML };
 
 // https://pixabay.com/api/?key=30279426-ce0edf6a31bb607e668c5bb01&q=yellow+flowers&image_type=photo
 const MAIN_URL = 'https://pixabay.com/api/';
-const API_KEY = '?key=30279426-ce0edf6a31bb607e668c5bb01';
-const OPT_URL = `&q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
+const API_KEY = '?key=30279426-ce0edf6a31bb607e668c5bb01&';
 const URL = MAIN_URL + API_KEY;
-
-// let page = 1;
-// const per_page = 40;
 
 class FetchPhoto {
   constructor() {
@@ -23,6 +19,9 @@ class FetchPhoto {
         q: this.searchQuery,
         per_page: 40,
         page: this.page,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
       });
       // const OPT_URL = `q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
       const url = `${URL}${searchParams}`;
