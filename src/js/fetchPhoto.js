@@ -26,9 +26,13 @@ class FetchPhoto {
       // const OPT_URL = `q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
       const url = `${URL}${searchParams}`;
 
-      return (response = await axios.get(url).then(({ articles }) => articles));
-      // return (response = await axios.get(url).then(({ articles }) => articles));
+      const response = await axios.get(url);
+      console.log(response);
+      return response;
 
+      // .then(function ({ articles }) => articles);
+      // return (response = await axios.get(url).then(({ articles }) => articles));
+      
     } catch (error) {
       console.error('error in async:', error);
       return onFetchError;
@@ -37,7 +41,7 @@ class FetchPhoto {
 
   incrementPage() {
     this.page += 1;
-    if (this.page = 2) {
+    if ((this.page = 2)) {
       Notiflix.Notify.success('Hooray! We found totalHits images.');
     }
   }
