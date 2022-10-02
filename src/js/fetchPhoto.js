@@ -1,6 +1,10 @@
 import Notiflix from 'notiflix';
 import axios from 'axios';
+import getRefs from './get-refs';
 export { FetchPhoto, onFetchError };
+
+const refs = getRefs();
+
 
 // https://pixabay.com/api/?key=30279426-ce0edf6a31bb607e668c5bb01&q=yellow+flowers&image_type=photo
 const MAIN_URL = 'https://pixabay.com/api/';
@@ -22,9 +26,12 @@ class FetchPhoto {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
+        page: this.page,
       });
       // const OPT_URL = `q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
       const url = `${URL}${searchParams}`;
+
+      console.log(this.page);
 
       const response = await axios.get(url);
       return response;
@@ -39,9 +46,9 @@ class FetchPhoto {
 
   incrementPage() {
     this.page += 1;
-    if ((this.page = 2)) {
-      Notiflix.Notify.success('Hooray! We found totalHits images.');
-    }
+    // if (this.page = 2) {
+    //   Notiflix.Notify.success('Hooray! We found totalHits images.');
+    // }
   }
 
   resetPage() {

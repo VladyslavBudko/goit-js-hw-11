@@ -43,9 +43,9 @@ function clearArticlesContainer() {
 const onEntry = entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting && fetchPhoto.query !== '') {
+      fetchPhoto.incrementPage();
       fetchPhoto.fetchArticles().then(hits => {
         appendArticlesMarkup(hits.data.hits);
-        fetchPhoto.incrementPage();
       });
     }
   });
@@ -54,7 +54,7 @@ const onEntry = entries => {
 const observer = new IntersectionObserver(onEntry, {
   rootMargin: '150px',
 });
-observer.observe(refs.submitBtn);
+observer.observe(refs.moreBtn);
 // observer.observe(refs.sentinel);
 
 // Notiflix.Notify.info(
