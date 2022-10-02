@@ -27,12 +27,10 @@ class FetchPhoto {
       const url = `${URL}${searchParams}`;
 
       const response = await axios.get(url);
-      console.log(response);
       return response;
 
       // .then(function ({ data.hits }) => hits);
       // return (response = await axios.get(url).then(({ articles }) => articles));
-
     } catch (error) {
       console.error('error in async:', error);
       return onFetchError;
@@ -57,49 +55,11 @@ class FetchPhoto {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-
-  // return fetch(URL)
-  //   .then(response => {
-  //     if (!response.ok) {
-  //       return onFetchError;
-  //     }
-  //     return response.json();
-  //   })
-  //   .catch(onFetchError);
 }
-
-// async function fetchPhoto(name) {
-//   try {
-//     const response = await axios.get('/user?ID=12');
-//     console.log('response in assync:', response);
-//     // const userID = awaid response.json();
-//     return response;
-//   } catch (error) {
-//     console.error('error in async:', error);
-//   }
-// }
-
-// getUser()
-//   .then(response => {
-//     console.log('response in getUser:', response);
-//     return response;
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   })
-// .then(function () {
-//   console.log('Всегда');
-//   // выполняется всегда
-// });
 
 function onFetchError(error) {
   // resetInnerHTML();
   Notiflix.Notify.failure(
     'Sorry, there are no images matching your search query. Please try again.'
   );
-
-  // function resetInnerHTML() {
-  //   refs.countryListEl.innerHTML = '';
-  //   refs.countryInfoEl.innerHTML = '';
-  // }
 }

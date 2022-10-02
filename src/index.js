@@ -12,7 +12,6 @@ refs.searchForm.addEventListener('submit', onSearch);
 function onSearch(event) {
   event.preventDefault();
 
-  console.log(event.currentTarget.elements.searchQuery.value);
   fetchPhoto.query = event.currentTarget.elements.searchQuery.value;
 
   if (fetchPhoto.query === '') {
@@ -23,10 +22,9 @@ function onSearch(event) {
   fetchPhoto.resetPage();
   clearArticlesContainer();
   fetchPhoto.fetchArticles().then(hits => {
-    console.log(`hits:`, hits);
-    console.log(`hits.data:`, hits.data);
-    console.log(`hits.data.hits:`, hits.data.hits);
-
+    if (hits.data.total === 0) {
+      return onFetchError();
+    }
     appendArticlesMarkup(hits.data.hits);
     fetchPhoto.incrementPage();
   });

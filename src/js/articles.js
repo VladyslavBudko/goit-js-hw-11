@@ -18,7 +18,7 @@
 //   </div>
 // {{/each}}
 
- export default function articlesTpl(photo) {
+export default function articlesTpl(photo) {
   return photo
     .map(({ webformatURL, tags, likes, views, comments, downloads }) => {
       return `
@@ -26,16 +26,16 @@
       <img src='${webformatURL}' alt='${tags}' loading='lazy' />
       <div class='info'>
         <p class='info-item'>
-          <b>${likes}</b>
+          <b>Likes: ${likes}</b>
         </p>
         <p class='info-item'>
-          <b>${views}</b>
+          <b>Views: ${views}</b>
         </p>
         <p class='info-item'>
-          <b>${comments}</b>
+          <b>Comments: ${comments}</b>
         </p>
         <p class='info-item'>
-          <b>${downloads}</b>
+          <b>Downloads: ${downloads}</b>
         </p>
       </div>
     </div>`;
