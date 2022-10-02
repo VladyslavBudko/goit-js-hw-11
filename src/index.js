@@ -7,7 +7,15 @@ import articlesTpl from './js/articles';
 const refs = getRefs();
 const fetchPhoto = new FetchPhoto();
 
-refs.submitBtn.classList.add('btn');
+refs.submitBtn.classList.add('button');
+refs.moreBtn.classList.add('button', 'is-hidden');
+
+refs.moreBtn.addEventListener('click', topFunction);
+
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 
 refs.searchForm.addEventListener('submit', onSearch);
 
@@ -30,6 +38,8 @@ function onSearch(event) {
     appendArticlesMarkup(hits.data.hits);
     fetchPhoto.incrementPage();
   });
+
+  // if !!!!!!!!!
 }
 
 function appendArticlesMarkup(hits) {
@@ -54,9 +64,5 @@ const onEntry = entries => {
 const observer = new IntersectionObserver(onEntry, {
   rootMargin: '150px',
 });
-observer.observe(refs.moreBtn);
-// observer.observe(refs.sentinel);
+observer.observe(refs.sentinel);
 
-// Notiflix.Notify.info(
-//   "We're sorry, but you've reached the end of search results."
-// );

@@ -14,31 +14,39 @@ class FetchPhoto {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.per_page = 40;
   }
 
   async fetchArticles() {
     try {
       const searchParams = new URLSearchParams({
         q: this.searchQuery,
-        per_page: 40,
+        per_page: this.per_page,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
         page: this.page,
       });
-      // const OPT_URL = `q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
       const url = `${URL}${searchParams}`;
 
-      console.log(this.page);
-
       const response = await axios.get(url);
+
+      let counterPhoto = this.page * this.per_page;
+
       if (this.page === 1) {
         Notiflix.Notify.success(
           `Hooray! We found ${response.data.totalHits} images.`
         );
       }
 
-      console.log(response);
+      if (counterPhoto > response.data.totalHits && this.page !== 1) {
+        Notiflix.Notify.info(
+          `We're sorry, but you've reached the end of search results ${response.data.totalHits} images`
+        );
+        refs.moreBtn.classList.remove('is-hidden');
+        return;
+      }
+
       return response;
     } catch (error) {
       console.error('error in async:', error);
