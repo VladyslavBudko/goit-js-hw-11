@@ -1,6 +1,6 @@
 import Notiflix from 'notiflix';
 import axios from 'axios';
-export { FetchPhoto, onFetchError, resetInnerHTML };
+export { FetchPhoto, onFetchError };
 
 // https://pixabay.com/api/?key=30279426-ce0edf6a31bb607e668c5bb01&q=yellow+flowers&image_type=photo
 const MAIN_URL = 'https://pixabay.com/api/';
@@ -58,7 +58,7 @@ class FetchPhoto {
 }
 
 function onFetchError(error) {
-  // resetInnerHTML();
+  refs.articlesContainer.innerHTML = '';
   Notiflix.Notify.failure(
     'Sorry, there are no images matching your search query. Please try again.'
   );
