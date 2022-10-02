@@ -1,58 +1,67 @@
-import axios from 'axios';
+// import axios from 'axios';
 import Notiflix from 'notiflix';
-import { fetchPhoto, onFetchError, resetInnerHTML } from './fetchPhoto';
-import getRefs from './get-refs';
+import { FetchPhoto, onFetchError, resetInnerHTML } from './js/fetchPhoto';
+import getRefs from './js/get-refs';
+import articlesTpl from './js/articles';
 
+const refs = getRefs();
+const fetchPhoto = new FetchPhoto();
 
+refs.searchForm.addEventListener('submit', onSearch);
 
-const MAIN_URL = 'https://pixabay.com/api/';
-const API_KEY = '30279426-ce0edf6a31bb607e668c5bb01';
-let query = '';
-const OPT_URL = `q=${query}&image_type=photo&orientation=horizontal&safesearch=true`;
-let URL = MAIN_URL+API_KEY+OPT_URL;
+function onSearch(event) {
+  event.preventDefault();
+  
+  console.log(event.currentTarget.elements.searchQuery.value);
+  fetchPhoto.query = event.currentTarget.elements.searchQuery.value;
 
-let page = 1;
-const per_page = 40;
-
-
-// $.getJSON(URL, function(data){
-// if (parseInt(data.totalHits) > 0)
-//     $.each(data.hits, function(i, hit){ console.log(hit.pageURL); });
-// else
-//     console.log('No hits');
-// });
-
-
-async function getUser() {
-  try {
-    const response = await axios.get(URL);
-    console.log('response in assync:', response);
-    // const userID = awaid response.json();
-    return response;
-  } catch (error) {
-    console.error('error in async:', error);
+  if (fetchPhoto.query === '') {
+    return onFetchError();
+    // alert('Введи что-то нормальное');
   }
-}
 
-getUser()
-  .then(response => {
-    console.log('response in getUser:', response);
-    return response;
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .then(function () {
-    console.log('Всегда');
-    // выполняется всегда
+  fetchPhoto.resetPage();
+  clearArticlesContainer();
+  fetchPhoto.fetchArticles().then(articles => {
+    appendArticlesMarkup(articles);
+    fetchPhoto.incrementPage();
   });
-
-// function onFetchError(error) {
-//   resetInnerHTML();
-//   Notiflix.Notify.failure(
-//     'Sorry, there are no images matching your search query. Please try again.'
-//   );
 }
 
+function appendArticlesMarkup(articles) {
+  refs.articlesContainer.insertAdjacentHTML('beforeend', articlesTpl(articles));
+}
 
-// "We're sorry, but you've reached the end of search results."
+function clearArticlesContainer() {
+  refs.articlesContainer.innerHTML = '';
+}
+
+// function getRefs() {
+//   return {
+//     searchForm: document.querySelector('.js-search-form'),
+//     articlesContainer: document.querySelector('.js-articles-container'),
+//     sentinel: document.querySelector('#sentinel'),
+//   };
+// }
+
+const onEntry = entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && fetchPhoto.query !== '') {
+      fetchPhoto.fetchArticles().then(articles => {
+        appendArticlesMarkup(articles);
+        fetchPhoto.incrementPage();
+      });
+    }
+  });
+};
+
+const observer = new IntersectionObserver(onEntry, {
+  rootMargin: '150px',
+});
+observer.observe(refs.submitBtn);
+// observer.observe(refs.sentinel);
+
+
+Notiflix.Notify.info(
+  "We're sorry, but you've reached the end of search results."
+);
