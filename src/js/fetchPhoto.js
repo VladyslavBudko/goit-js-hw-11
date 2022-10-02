@@ -2,9 +2,10 @@ import Notiflix from 'notiflix';
 import axios from 'axios';
 export { FetchPhoto, onFetchError, resetInnerHTML };
 
+// https://pixabay.com/api/?key=30279426-ce0edf6a31bb607e668c5bb01&q=yellow+flowers&image_type=photo
 const MAIN_URL = 'https://pixabay.com/api/';
-const API_KEY = '30279426-ce0edf6a31bb607e668c5bb01';
-const OPT_URL = `q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
+const API_KEY = '?key=30279426-ce0edf6a31bb607e668c5bb01';
+const OPT_URL = `&q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
 const URL = MAIN_URL + API_KEY;
 
 // let page = 1;
@@ -26,7 +27,7 @@ class FetchPhoto {
       // const OPT_URL = `q=${name}&image_type=photo&orientation=horizontal&safesearch=true`;
       const url = `${URL}${searchParams}`;
 
-      return (response = await axios.get(url).then(articles));
+      return (response = await axios.get(url).then(({ articles }) => articles));
       // return (response = await axios.get(url).then(({ articles }) => articles));
 
     } catch (error) {
