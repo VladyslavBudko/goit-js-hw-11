@@ -17,8 +17,8 @@ function onSearch(event) {
   fetchPhoto.query = event.currentTarget.elements.searchQuery.value.trim();
 
   if (fetchPhoto.query === '') {
+    Notiflix.Notify.info(`Enter search data, please`);
     return onFetchError();
-    // alert('Введи что-то нормальное');
   }
 
   fetchPhoto.resetPage();
