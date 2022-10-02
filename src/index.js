@@ -7,6 +7,8 @@ import articlesTpl from './js/articles';
 const refs = getRefs();
 const fetchPhoto = new FetchPhoto();
 
+refs.submitBtn.classList.add('btn');
+
 refs.searchForm.addEventListener('submit', onSearch);
 
 function onSearch(event) {
