@@ -30,9 +30,9 @@ class FetchPhoto {
       console.log(response);
       return response;
 
-      // .then(function ({ articles }) => articles);
+      // .then(function ({ data.hits }) => hits);
       // return (response = await axios.get(url).then(({ articles }) => articles));
-      
+
     } catch (error) {
       console.error('error in async:', error);
       return onFetchError;
