@@ -38,8 +38,8 @@ class FetchPhoto {
           `Hooray! We found ${response.data.totalHits} images.`
         );
       }
-
-      if (counterPhoto > response.data.totalHits && this.page !== 1) {
+      // && this.page !== 1
+      if (counterPhoto > response.data.totalHits ) {
         Notiflix.Notify.info(
           `We're sorry, but you've reached the end of search results ${response.data.totalHits} images`
         );
