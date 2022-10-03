@@ -26,24 +26,27 @@ refs.searchForm.addEventListener('submit', onSearch);
 function onSearch(event) {
   event.preventDefault();
 
-  fetchPhoto.query = event.currentTarget.elements.searchQuery.value.trim();
+  const form = event.currentTarget;
+  fetchPhoto.query = form.elements.searchQuery.value.trim();
 
   if (fetchPhoto.query === '') {
-    refs.articlesContainer.innerHTML = '';
-   return Notiflix.Notify.info(`Enter search data, please`);
-
-    // return onFetchError();
+    return Notiflix.Notify.info(`Enter search data, please`);
   }
 
   fetchPhoto.resetPage();
+  form.reset();
+  try {
+    fetchPhoto.fetchArticles().then(hits => {
+      if (hits.data.total === 0) {
+        return onFetchError();
+      }
+      appendArticlesMarkup(hits.data.hits);
+      fetchPhoto.incrementPage();
+    });
+  } catch {
+   return onFetch400();
+  }
   clearArticlesContainer();
-  fetchPhoto.fetchArticles().then(hits => {
-    if (hits.data.total === 0) {
-      return onFetchError();
-    }
-    appendArticlesMarkup(hits.data.hits);
-    fetchPhoto.incrementPage();
-  });
 }
 
 function appendArticlesMarkup(hits) {
@@ -55,15 +58,26 @@ function clearArticlesContainer() {
 }
 
 const onEntry = entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && fetchPhoto.query !== '') {
-      fetchPhoto.fetchArticles().then(hits => {
-        appendArticlesMarkup(hits.data.hits);
-        fetchPhoto.incrementPage();
-      });
-    }
-  });
+  try {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && fetchPhoto.query !== '') {
+        fetchPhoto.fetchArticles().then(hits => {
+        
+          appendArticlesMarkup(hits.data.hits);
+          fetchPhoto.incrementPage();
+        });
+      }
+    });
+  } catch {
+    onFetch400();
+  }
 };
+
+function onFetch400() {
+  Notiflix.Notify.info(
+    `We're sorry, but you've reached the end of search results images`
+  );
+}
 
 // Бесконечній скролл
 const observer = new IntersectionObserver(onEntry, {
