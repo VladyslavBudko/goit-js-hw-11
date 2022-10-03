@@ -3,7 +3,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import Notiflix from 'notiflix';
-import { FetchPhoto, onFetchError, resetInnerHTML } from './js/fetchPhoto';
+import { FetchPhoto, onFetchError } from './js/fetchPhoto';
 import getRefs from './js/get-refs';
 import articlesTpl from './js/articles';
 
@@ -29,8 +29,10 @@ function onSearch(event) {
   fetchPhoto.query = event.currentTarget.elements.searchQuery.value.trim();
 
   if (fetchPhoto.query === '') {
-    Notiflix.Notify.info(`Enter search data, please`);
-    return onFetchError();
+    refs.articlesContainer.innerHTML = '';
+   return Notiflix.Notify.info(`Enter search data, please`);
+
+    // return onFetchError();
   }
 
   fetchPhoto.resetPage();
@@ -65,7 +67,7 @@ const onEntry = entries => {
 
 // Бесконечній скролл
 const observer = new IntersectionObserver(onEntry, {
-  rootMargin: '150px',
+  rootMargin: '300px',
 });
 observer.observe(refs.sentinel);
 

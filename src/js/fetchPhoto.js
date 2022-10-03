@@ -27,27 +27,41 @@ class FetchPhoto {
         safesearch: true,
         page: this.page,
       });
-      const url = `${URL}${searchParams}`;
 
+      const url = `${URL}${searchParams}`;
       const response = await axios.get(url);
 
+// !!!!!!!!!!
+      console.log(response);
+
+    
       let counterPhoto = this.page * this.per_page;
 
-      if (this.page === 1) {
+      if (this.page === 1 && response.data.totalHits !== 0) {
         Notiflix.Notify.success(
           `Hooray! We found ${response.data.totalHits} images.`
         );
       }
-      // && this.page !== 1
-      if (counterPhoto > response.data.totalHits ) {
+
+      if (
+        counterPhoto > response.data.totalHits &&
+        response.data.totalHits !== 0 &&
+        this.page !== 1
+      ) {
         Notiflix.Notify.info(
           `We're sorry, but you've reached the end of search results ${response.data.totalHits} images`
         );
         refs.moreBtn.classList.remove('is-hidden');
       }
 
+// !!!!!!!!!!!!
+      // if (!response.status === 200) {
+      //   return onFetchError;
+      // }
+
       return response;
     } catch (error) {
+      
       console.error('error in async:', error);
       return onFetchError;
     }
