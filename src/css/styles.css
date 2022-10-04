@@ -27,8 +27,9 @@ img {
 .search-form {
     position: fixed;
     top: 0;
-    left: 50%;
-    translate: -50%;
+    left: auto;
+    right: auto;
+  
     max-height: 50px;
     width: 100%;
     background-color: rgba(0, 0, 255, 0.524);
