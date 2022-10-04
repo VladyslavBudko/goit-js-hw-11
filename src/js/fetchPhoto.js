@@ -44,13 +44,13 @@ class FetchPhoto {
         );
       }
 
-      if (
-        counterPhoto > this.totalHits &&
-        this.totalHits !== 0 &&
-        this.page !== 1
-      ) {
-        onFetchInfo(this.totalHits);
-      }
+      // if (
+      //   counterPhoto > this.totalHits &&
+      //   this.totalHits !== 0 &&
+      //   this.page !== 1
+      // ) {
+      //   onFetchInfo(this.totalHits);
+      // }
 
       return response;
     } catch (error) {
